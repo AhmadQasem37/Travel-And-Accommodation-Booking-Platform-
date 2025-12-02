@@ -1,0 +1,46 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Source code
+*.cs text diff=csharp
+*.csx text diff=csharp
+*.sql text
+
+# Project files
+*.csproj text merge=union
+*.sln text merge=union eol=crlf
+*.props text
+*.targets text
+
+# Config files
+*.json text
+*.xml text
+*.config text
+*.yaml text
+*.yml text
+
+# Documentation
+*.md text diff=markdown
+*.txt text
+
+# Docker
+Dockerfile text
+*.dockerignore text
+
+# Scripts
+*.sh text eol=lf
+*.ps1 text eol=crlf
+*.cmd text eol=crlf
+*.bat text eol=crlf
+
+# Binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.dll binary
+*.exe binary
+*.pdb binary

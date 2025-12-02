@@ -1,0 +1,35 @@
+﻿services:
+  taabp.db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: taabp-sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Ahmad@123456
+      - MSSQL_PID=Developer
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    healthcheck:
+      test: /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "Ahmad@123456" -C -Q "SELECT 1" || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  taabp.api:
+    image: taabp.api
+    build:
+      context: .
+      dockerfile: TAABP.Api/Dockerfile
+    ports:
+      - "5000:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=taabp.db;Database=TAABP;User Id=sa;Password=Ahmad@123456;TrustServerCertificate=True
+    depends_on:
+      taabp.db:
+        condition: service_healthy
+
+volumes:
+  sqlserver_data:

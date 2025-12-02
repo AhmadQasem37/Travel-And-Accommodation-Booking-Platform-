@@ -1,0 +1,47 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{82766D77-AE1E-4EA1-A7B9-C64C4F40FAC9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TAABP.Domain", "TAABP.Domain\TAABP.Domain.csproj", "{9E83F773-95E1-4758-BFAD-83E303F0B13E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TAABP.Application", "TAABP.Application\TAABP.Application.csproj", "{54D8787E-E56D-4E76-A4CB-8503A3DD997C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TAABP.Infrastructure", "TAABP.Infrastructure\TAABP.Infrastructure.csproj", "{27F823D9-BAC1-4149-913C-794B823EDA9B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TAABP.Api", "TAABP.Api\TAABP.Api.csproj", "{A79E98EF-4A24-40B6-8EF4-5B9683B0E499}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{90061C1B-BB30-41D4-9675-A8F569BE50A6}"
+	ProjectSection(SolutionItems) = preProject
+		compose.yaml = compose.yaml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9E83F773-95E1-4758-BFAD-83E303F0B13E} = {82766D77-AE1E-4EA1-A7B9-C64C4F40FAC9}
+		{54D8787E-E56D-4E76-A4CB-8503A3DD997C} = {82766D77-AE1E-4EA1-A7B9-C64C4F40FAC9}
+		{27F823D9-BAC1-4149-913C-794B823EDA9B} = {82766D77-AE1E-4EA1-A7B9-C64C4F40FAC9}
+		{A79E98EF-4A24-40B6-8EF4-5B9683B0E499} = {82766D77-AE1E-4EA1-A7B9-C64C4F40FAC9}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9E83F773-95E1-4758-BFAD-83E303F0B13E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E83F773-95E1-4758-BFAD-83E303F0B13E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E83F773-95E1-4758-BFAD-83E303F0B13E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E83F773-95E1-4758-BFAD-83E303F0B13E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54D8787E-E56D-4E76-A4CB-8503A3DD997C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54D8787E-E56D-4E76-A4CB-8503A3DD997C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54D8787E-E56D-4E76-A4CB-8503A3DD997C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54D8787E-E56D-4E76-A4CB-8503A3DD997C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27F823D9-BAC1-4149-913C-794B823EDA9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27F823D9-BAC1-4149-913C-794B823EDA9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27F823D9-BAC1-4149-913C-794B823EDA9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27F823D9-BAC1-4149-913C-794B823EDA9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A79E98EF-4A24-40B6-8EF4-5B9683B0E499}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A79E98EF-4A24-40B6-8EF4-5B9683B0E499}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A79E98EF-4A24-40B6-8EF4-5B9683B0E499}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A79E98EF-4A24-40B6-8EF4-5B9683B0E499}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
