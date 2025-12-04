@@ -1,23 +1,22 @@
+using TAABP.Api;
+using TAABP.Application;
+using TAABP.Infrastructure;
+using TAABP.Infrastructure.Persistence.Seeding;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+// Add services from each layer
+builder.Services
+    .AddApplication()
+    .AddInfrastructure(builder.Configuration)
+    .AddApi();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
+// Seed database
+await DataSeeder.SeedAsync(app.Services);
 
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
+// Configure the HTTP request pipeline
+app.UseApi();
 
 app.Run();
