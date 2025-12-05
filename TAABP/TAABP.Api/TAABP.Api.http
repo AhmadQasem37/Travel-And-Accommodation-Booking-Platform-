@@ -108,3 +108,19 @@ Authorization: Bearer {{token}}
 ### Search hotels - full example with all filters
 GET {{baseUrl}}/api/v1/hotels/search?searchQuery=hotel&checkInDate=2025-12-10&checkOutDate=2025-12-15&adults=2&children=0&rooms=1&minPrice=50&maxPrice=1000&starRatings=4&starRatings=5&sortBy=Price&sortOrder=Asc&page=1&pageSize=10
 Authorization: Bearer {{token}}
+
+### ========================================
+### CITIES ENDPOINTS (API v1)
+### ========================================
+
+### Get trending destinations - default (top 5 most visited cities) - User only
+GET {{baseUrl}}/api/v1/cities/trending-destinations
+Authorization: Bearer {{token}}
+
+### Get trending destinations - custom count (top 3) - User only
+GET {{baseUrl}}/api/v1/cities/trending-destinations?count=3
+Authorization: Bearer {{token}}
+
+### Get trending destinations - max count (top 10) - User only
+GET {{baseUrl}}/api/v1/cities/trending-destinations?count=10
+Authorization: Bearer {{token}}
