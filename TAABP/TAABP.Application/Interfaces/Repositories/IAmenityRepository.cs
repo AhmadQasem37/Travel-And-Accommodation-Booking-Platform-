@@ -8,6 +8,7 @@ namespace TAABP.Application.Interfaces.Repositories;
 /// </summary>
 public interface IAmenityRepository
 {
+    Task<IReadOnlyList<Amenity>> GetAllAsync(CancellationToken cancellationToken = default);
     Task<Amenity?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
     void Add(Amenity entity);
     void Update(Amenity entity);

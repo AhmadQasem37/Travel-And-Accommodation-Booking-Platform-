@@ -7,6 +7,14 @@ namespace TAABP.Infrastructure.Persistence.Repositories;
 
 public sealed class AmenityRepository(ApplicationDbContext context) : IAmenityRepository
 {
+    public async Task<IReadOnlyList<Amenity>> GetAllAsync(CancellationToken cancellationToken = default)
+    {
+        return await context.Amenities
+            .AsNoTracking()
+            .OrderBy(a => a.Name)
+            .ToListAsync(cancellationToken);
+    }
+
     public async Task<Amenity?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await context.Amenities
