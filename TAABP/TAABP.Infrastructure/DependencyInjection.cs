@@ -75,7 +75,12 @@ public static class DependencyInjection
             };
         });
 
-        services.AddAuthorization();
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
+            options.AddPolicy("User", policy => policy.RequireRole("User"));
+            options.AddPolicy("AdminOrUser", policy => policy.RequireRole("Admin", "User"));
+        });
 
         return services;
     }

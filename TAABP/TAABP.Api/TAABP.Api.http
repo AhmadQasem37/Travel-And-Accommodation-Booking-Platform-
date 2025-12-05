@@ -1,5 +1,5 @@
 @baseUrl = https://localhost:7169
-@token = {{login.response.body.token}}
+@token = //{{login.response.body.token}}
 @adminToken = {{adminLogin.response.body.token}}
 
 ### ========================================
@@ -52,3 +52,39 @@ Content-Type: application/json
 ### Example: Admin endpoint (requires Admin token)
 # GET {{baseUrl}}/api/v1/admin/dashboard
 # Authorization: Bearer {{adminToken}}
+
+### ========================================
+### HOTELS ENDPOINTS (API v1) - Requires Auth
+### ========================================
+
+### Search hotels - default (today/tomorrow, 2 adults, sorted by price)
+GET {{baseUrl}}/api/v1/hotels/search
+Authorization: Bearer {{adminToken}}
+
+### Search hotels - with query filter
+GET {{baseUrl}}/api/v1/hotels/search?searchQuery=Dubai
+Authorization: Bearer {{adminToken}}
+
+### Search hotels - with date range and guests
+GET {{baseUrl}}/api/v1/hotels/search?checkInDate=2025-12-10&checkOutDate=2025-12-15&adults=2&children=1&rooms=1
+Authorization: Bearer {{adminToken}}
+
+### Search hotels - with price range
+GET {{baseUrl}}/api/v1/hotels/search?minPrice=100&maxPrice=500
+Authorization: Bearer {{adminToken}}
+
+### Search hotels - with star ratings (4 and 5 stars)
+GET {{baseUrl}}/api/v1/hotels/search?starRatings=4&starRatings=5
+Authorization: Bearer {{token}}
+
+### Search hotels - sorted by star rating descending
+GET {{baseUrl}}/api/v1/hotels/search?sortBy=StarRating&sortOrder=Desc
+Authorization: Bearer {{token}}
+
+### Search hotels - with pagination
+GET {{baseUrl}}/api/v1/hotels/search?page=1&pageSize=5
+Authorization: Bearer {{token}}
+
+### Search hotels - full example with all filters
+GET {{baseUrl}}/api/v1/hotels/search?searchQuery=hotel&checkInDate=2025-12-10&checkOutDate=2025-12-15&adults=2&children=0&rooms=1&minPrice=50&maxPrice=1000&starRatings=4&starRatings=5&sortBy=Price&sortOrder=Asc&page=1&pageSize=10
+Authorization: Bearer {{token}}
