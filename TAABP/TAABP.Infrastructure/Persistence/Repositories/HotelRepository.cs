@@ -119,4 +119,27 @@ public sealed class HotelRepository(ApplicationDbContext context) : IHotelReposi
 
         return new PagedResult<SearchHotelDto>(hotels, query.Page, query.PageSize, totalCount);
     }
+
+    public async Task<IReadOnlyList<FeaturedDealDto>> GetFeaturedDealsAsync(
+        int count,
+        CancellationToken cancellationToken = default)
+    {
+        return await context.Hotels
+            .AsNoTracking()
+            .Include(h => h.City)
+            .Where(h => h.DiscountPercentage.HasValue && h.DiscountPercentage > 0)
+            .OrderByDescending(h => h.DiscountPercentage)
+            .Take(count)
+            .Select(h => new FeaturedDealDto(
+                h.Id,
+                h.Name,
+                h.City.Name,
+                h.City.Country,
+                h.StarRating,
+                h.ThumbnailUrl,
+                h.MinRoomPrice,
+                h.MinRoomPrice * (1 - h.DiscountPercentage!.Value / 100m),
+                h.DiscountPercentage.Value))
+            .ToListAsync(cancellationToken);
+    }
 }

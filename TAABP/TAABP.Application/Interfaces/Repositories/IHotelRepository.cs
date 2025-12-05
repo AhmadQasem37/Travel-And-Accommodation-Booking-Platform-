@@ -17,4 +17,7 @@ public interface IHotelRepository
     Task<PagedResult<SearchHotelDto>> SearchAsync(
         SearchHotelsQuery query,
         CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<FeaturedDealDto>> GetFeaturedDealsAsync(
+        int count,
+        CancellationToken cancellationToken = default);
 }

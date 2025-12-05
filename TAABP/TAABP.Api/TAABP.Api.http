@@ -54,8 +54,20 @@ Content-Type: application/json
 # Authorization: Bearer {{adminToken}}
 
 ### ========================================
-### HOTELS ENDPOINTS (API v1) - Requires Auth
+### HOTELS ENDPOINTS (API v1)
 ### ========================================
+
+### Get featured deals - default (top 5 hotels with discounts) - User only
+GET {{baseUrl}}/api/v1/hotels/featured-deals
+Authorization: Bearer {{token}}
+
+### Get featured deals - custom count (top 3) - User only
+GET {{baseUrl}}/api/v1/hotels/featured-deals?count=3
+Authorization: Bearer {{token}}
+
+### Get featured deals - max count (top 10) - User only
+GET {{baseUrl}}/api/v1/hotels/featured-deals?count=10
+Authorization: Bearer {{token}}
 
 ### Search hotels - default (today/tomorrow, 2 adults, sorted by price)
 GET {{baseUrl}}/api/v1/hotels/search
