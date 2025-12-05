@@ -57,6 +57,15 @@ Content-Type: application/json
 ### HOTELS ENDPOINTS (API v1)
 ### ========================================
 
+### Get hotel details by ID - User only
+### Records visit to recently visited hotels for authenticated users
+GET {{baseUrl}}/api/v1/hotels/66666666-6666-6666-6666-666666666666
+Authorization: Bearer {{token}}
+
+### Get hotel details - Hotel not found (404)
+GET {{baseUrl}}/api/v1/hotels/00000000-0000-0000-0000-000000000001
+Authorization: Bearer {{token}}
+
 ### Get featured deals - default (top 5 hotels with discounts) - User only
 GET {{baseUrl}}/api/v1/hotels/featured-deals
 Authorization: Bearer {{token}}

@@ -18,6 +18,39 @@ public sealed class HotelRepository(ApplicationDbContext context) : IHotelReposi
             .FirstOrDefaultAsync(h => h.Id == id, cancellationToken);
     }
 
+    public async Task<HotelDetailsDto?> GetByIdWithDetailsAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        return await context.Hotels
+            .AsNoTracking()
+            .Include(h => h.City)
+            .Include(h => h.Images)
+            .Include(h => h.HotelAmenities)
+                .ThenInclude(ha => ha.Amenity)
+            .Include(h => h.Reviews)
+            .Where(h => h.Id == id)
+            .Select(h => new HotelDetailsDto(
+                h.Id,
+                h.Name,
+                h.Description,
+                h.StarRating,
+                h.Address,
+                h.Latitude,
+                h.Longitude,
+                h.NearbyAttractions,
+                new HotelCityDto(
+                    h.City.Id,
+                    h.City.Name,
+                    h.City.Country),
+                h.MinRoomPrice,
+                h.DiscountPercentage,
+                h.Images.Select(i => new HotelImageDto(i.Id, i.ImageUrl)).ToList(),
+                h.HotelAmenities.Select(ha => new HotelAmenityDto(ha.Amenity.Id, ha.Amenity.Name)).ToList(),
+                h.Reviews.Any() ? Math.Round(h.Reviews.Average(r => (decimal)r.Rating), 1) : 0m,
+                h.Reviews.Count,
+                h.CreatedAt))
+            .FirstOrDefaultAsync(cancellationToken);
+    }
+
     public void Add(Hotel entity) => context.Hotels.Add(entity);
 
     public void Update(Hotel entity) => context.Hotels.Update(entity);

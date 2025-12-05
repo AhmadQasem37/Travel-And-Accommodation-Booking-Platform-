@@ -11,6 +11,7 @@ namespace TAABP.Application.Interfaces.Repositories;
 public interface IHotelRepository
 {
     Task<Hotel?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<HotelDetailsDto?> GetByIdWithDetailsAsync(Guid id, CancellationToken cancellationToken = default);
     void Add(Hotel entity);
     void Update(Hotel entity);
     void Remove(Hotel entity);

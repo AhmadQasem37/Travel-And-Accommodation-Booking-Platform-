@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using TAABP.Application.Common;
 using TAABP.Application.DTOs.Hotels;
 using TAABP.Application.Features.Hotels.Queries.GetFeaturedDeals;
+using TAABP.Application.Features.Hotels.Queries.GetHotelById;
 using TAABP.Application.Features.Hotels.Queries.GetRecentlyVisitedHotels;
 using TAABP.Application.Features.Hotels.Queries.SearchHotels;
 
@@ -16,6 +17,31 @@ namespace TAABP.Api.Controllers;
 [Authorize]
 public sealed class HotelsController(ISender sender) : ControllerBase
 {
+    /// <summary>
+    /// Get hotel details by ID
+    /// </summary>
+    /// <param name="query">The query containing the hotel ID from route</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>Hotel details including city, images, amenities, and review statistics</returns>
+    [HttpGet("{hotelId:guid}")]
+    [Authorize(Policy = "User")]
+    [ProducesResponseType(typeof(HotelDetailsDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<ActionResult<HotelDetailsDto>> GetById(
+        [FromRoute] GetHotelByIdQuery query,
+        CancellationToken cancellationToken = default)
+    {
+        var result = await sender.Send(query, cancellationToken);
+
+        if (result.IsFailure)
+        {
+            return NotFound(new { error = result.Error.Description });
+        }
+
+        return Ok(result.Value);
+    }
+
     /// <summary>
     /// Get featured deals - hotels with active discounts
     /// </summary>

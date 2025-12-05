@@ -31,6 +31,26 @@ public sealed class RecentlyVisitedHotelRepository(ApplicationDbContext context)
             .ToListAsync(cancellationToken);
     }
 
+    public async Task UpsertVisitAsync(Guid userId, Guid hotelId, CancellationToken cancellationToken = default)
+    {
+        var existingVisit = await context.RecentlyVisitedHotels
+            .FirstOrDefaultAsync(rv => rv.UserId == userId && rv.HotelId == hotelId, cancellationToken);
+
+        if (existingVisit is not null)
+        {
+            existingVisit.VisitedAt = DateTime.UtcNow;
+        }
+        else
+        {
+            context.RecentlyVisitedHotels.Add(new RecentlyVisitedHotel
+            {
+                UserId = userId,
+                HotelId = hotelId,
+                VisitedAt = DateTime.UtcNow
+            });
+        }
+    }
+
     public void Add(RecentlyVisitedHotel entity) => context.RecentlyVisitedHotels.Add(entity);
 
     public void Remove(RecentlyVisitedHotel entity) => context.RecentlyVisitedHotels.Remove(entity);

@@ -12,6 +12,7 @@ public interface IRecentlyVisitedHotelRepository
         Guid userId,
         int count,
         CancellationToken cancellationToken = default);
+    Task UpsertVisitAsync(Guid userId, Guid hotelId, CancellationToken cancellationToken = default);
     void Add(RecentlyVisitedHotel entity);
     void Remove(RecentlyVisitedHotel entity);
 }
