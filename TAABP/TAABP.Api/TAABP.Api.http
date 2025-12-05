@@ -66,6 +66,22 @@ Authorization: Bearer {{token}}
 GET {{baseUrl}}/api/v1/hotels/00000000-0000-0000-0000-000000000001
 Authorization: Bearer {{token}}
 
+### Get available rooms for a hotel - default pagination (page 1, pageSize 10)
+GET {{baseUrl}}/api/v1/hotels/66666666-6666-6666-6666-666666666666/rooms
+Authorization: Bearer {{token}}
+
+### Get available rooms - with pagination
+GET {{baseUrl}}/api/v1/hotels/66666666-6666-6666-6666-666666666666/rooms?page=1&pageSize=5
+Authorization: Bearer {{token}}
+
+### Get available rooms - with admin token
+GET {{baseUrl}}/api/v1/hotels/66666666-6666-6666-6666-666666666666/rooms?page=1&pageSize=10
+Authorization: Bearer {{adminToken}}
+
+### Get available rooms - Hotel not found (404)
+GET {{baseUrl}}/api/v1/hotels/00000000-0000-0000-0000-000000000001/rooms
+Authorization: Bearer {{token}}
+
 ### Get featured deals - default (top 5 hotels with discounts) - User only
 GET {{baseUrl}}/api/v1/hotels/featured-deals
 Authorization: Bearer {{token}}
