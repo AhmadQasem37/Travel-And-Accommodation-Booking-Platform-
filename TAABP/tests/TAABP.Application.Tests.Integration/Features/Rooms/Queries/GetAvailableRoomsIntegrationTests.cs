@@ -136,7 +136,7 @@ public class GetAvailableRoomsIntegrationTests : IClassFixture<DatabaseFixture>
         var city = await SeedCityAsync(context, "Dubai", "UAE");
         var hotel = await SeedHotelAsync(context, city.Id, "Grand Hotel");
         var roomType = await SeedRoomTypeAsync(context, "Standard");
-        
+
         // Seed 15 rooms
         for (int i = 1; i <= 15; i++)
         {
@@ -163,7 +163,7 @@ public class GetAvailableRoomsIntegrationTests : IClassFixture<DatabaseFixture>
         var city = await SeedCityAsync(context, "Dubai", "UAE");
         var hotel = await SeedHotelAsync(context, city.Id, "Grand Hotel");
         var roomType = await SeedRoomTypeAsync(context, "Standard");
-        
+
         // Seed 12 rooms
         for (int i = 1; i <= 12; i++)
         {
@@ -209,7 +209,7 @@ public class GetAvailableRoomsIntegrationTests : IClassFixture<DatabaseFixture>
         var city = await SeedCityAsync(context, "Dubai", "UAE");
         var hotel = await SeedHotelAsync(context, city.Id, "Grand Hotel");
         var roomType = await SeedRoomTypeAsync(context, "Standard");
-        
+
         for (int i = 1; i <= 5; i++)
         {
             await SeedRoomAsync(context, hotel.Id, roomType.Id, $"{100 + i}", 100m + i);
@@ -262,7 +262,7 @@ public class GetAvailableRoomsIntegrationTests : IClassFixture<DatabaseFixture>
         var city = await SeedCityAsync(context, "Dubai", "UAE");
         var hotel = await SeedHotelAsync(context, city.Id, "Grand Hotel");
         var roomType = await SeedRoomTypeAsync(context, "Deluxe", "A luxurious deluxe room");
-        var room = await SeedRoomAsync(context, hotel.Id, roomType.Id, "101", 200m, 
+        var room = await SeedRoomAsync(context, hotel.Id, roomType.Id, "101", 200m,
             adultCapacity: 2, childCapacity: 1, isAvailable: true);
         var repository = new RoomRepository(context);
 
@@ -292,7 +292,7 @@ public class GetAvailableRoomsIntegrationTests : IClassFixture<DatabaseFixture>
         var standardType = await SeedRoomTypeAsync(context, "Standard");
         var deluxeType = await SeedRoomTypeAsync(context, "Deluxe");
         var suiteType = await SeedRoomTypeAsync(context, "Suite");
-        
+
         await SeedRoomAsync(context, hotel.Id, standardType.Id, "101", 100m);
         await SeedRoomAsync(context, hotel.Id, standardType.Id, "102", 100m);
         await SeedRoomAsync(context, hotel.Id, deluxeType.Id, "201", 200m);
@@ -448,7 +448,7 @@ public class GetAvailableRoomsIntegrationTests : IClassFixture<DatabaseFixture>
         var hotel1 = await SeedHotelAsync(context, city.Id, "Hotel 1");
         var hotel2 = await SeedHotelAsync(context, city.Id, "Hotel 2");
         var roomType = await SeedRoomTypeAsync(context, "Standard");
-        
+
         await SeedRoomAsync(context, hotel1.Id, roomType.Id, "101", 100m);
         await SeedRoomAsync(context, hotel1.Id, roomType.Id, "102", 100m);
         await SeedRoomAsync(context, hotel2.Id, roomType.Id, "201", 150m);
@@ -531,10 +531,10 @@ public class GetAvailableRoomsIntegrationTests : IClassFixture<DatabaseFixture>
     }
 
     private static async Task<Room> SeedRoomAsync(
-        ApplicationDbContext context, 
-        Guid hotelId, 
-        Guid roomTypeId, 
-        string roomNumber, 
+        ApplicationDbContext context,
+        Guid hotelId,
+        Guid roomTypeId,
+        string roomNumber,
         decimal price,
         int adultCapacity = 2,
         int childCapacity = 1,
