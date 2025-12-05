@@ -7,6 +7,14 @@ namespace TAABP.Infrastructure.Persistence.Repositories;
 
 public sealed class RoomTypeRepository(ApplicationDbContext context) : IRoomTypeRepository
 {
+    public async Task<IReadOnlyList<RoomType>> GetAllAsync(CancellationToken cancellationToken = default)
+    {
+        return await context.RoomTypes
+            .AsNoTracking()
+            .OrderBy(rt => rt.Name)
+            .ToListAsync(cancellationToken);
+    }
+
     public async Task<RoomType?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await context.RoomTypes

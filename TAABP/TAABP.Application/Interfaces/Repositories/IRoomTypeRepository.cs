@@ -8,6 +8,7 @@ namespace TAABP.Application.Interfaces.Repositories;
 /// </summary>
 public interface IRoomTypeRepository
 {
+    Task<IReadOnlyList<RoomType>> GetAllAsync(CancellationToken cancellationToken = default);
     Task<RoomType?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
     void Add(RoomType entity);
     void Update(RoomType entity);
