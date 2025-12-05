@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using TAABP.Application.Common;
 using TAABP.Application.DTOs.Hotels;
 using TAABP.Application.Features.Hotels.Queries.GetFeaturedDeals;
+using TAABP.Application.Features.Hotels.Queries.GetRecentlyVisitedHotels;
 using TAABP.Application.Features.Hotels.Queries.SearchHotels;
 
 namespace TAABP.Api.Controllers;
@@ -35,6 +36,30 @@ public sealed class HotelsController(ISender sender) : ControllerBase
         if (result.IsFailure)
         {
             return BadRequest(new { error = result.Error.Description });
+        }
+
+        return Ok(result.Value);
+    }
+
+    /// <summary>
+    /// Get recently visited hotels by the authenticated user
+    /// </summary>
+    /// <param name="query">Query parameters for recently visited hotels</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>List of recently visited hotels</returns>
+    [HttpGet("recently-visited")]
+    [Authorize(Policy = "User")]
+    [ProducesResponseType(typeof(IReadOnlyList<RecentlyVisitedHotelDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<ActionResult<IReadOnlyList<RecentlyVisitedHotelDto>>> GetRecentlyVisited(
+        [FromQuery] GetRecentlyVisitedHotelsQuery query,
+        CancellationToken cancellationToken = default)
+    {
+        var result = await sender.Send(query, cancellationToken);
+
+        if (result.IsFailure)
+        {
+            return Unauthorized(new { error = result.Error.Description });
         }
 
         return Ok(result.Value);

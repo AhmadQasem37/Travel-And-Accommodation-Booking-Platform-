@@ -69,6 +69,14 @@ Authorization: Bearer {{token}}
 GET {{baseUrl}}/api/v1/hotels/featured-deals?count=10
 Authorization: Bearer {{token}}
 
+### Get recently visited hotels - default (last 5) - User only
+GET {{baseUrl}}/api/v1/hotels/recently-visited
+Authorization: Bearer {{token}}
+
+### Get recently visited hotels - custom count - User only
+GET {{baseUrl}}/api/v1/hotels/recently-visited?count=3
+Authorization: Bearer {{token}}
+
 ### Search hotels - default (today/tomorrow, 2 adults, sorted by price)
 GET {{baseUrl}}/api/v1/hotels/search
 Authorization: Bearer {{adminToken}}
