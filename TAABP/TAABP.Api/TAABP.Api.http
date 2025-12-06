@@ -181,3 +181,57 @@ Authorization: Bearer {{token}}
 ### Get all room types - for filter dropdowns - User only
 GET {{baseUrl}}/api/v1/room-types
 Authorization: Bearer {{token}}
+
+### ========================================
+### REVIEWS ENDPOINTS (API v1)
+### ========================================
+
+### Create review - valid review
+POST {{baseUrl}}/api/v1/hotels/66666666-6666-6666-6666-666666666666/reviews
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "rating": 5,
+  "content": "We had a wonderful time at this hotel. The room was clean and spacious, and the staff was incredibly helpful."
+}
+
+### Create review - minimum valid content
+POST {{baseUrl}}/api/v1/hotels/66666666-6666-6666-6666-666666666666/reviews
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "rating": 3,
+  "content": "Average stay overall."
+}
+
+### Create review - Hotel not found (404)
+POST {{baseUrl}}/api/v1/hotels/00000000-0000-0000-0000-000000000001/reviews
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "rating": 4,
+  "content": "This hotel does not exist, should return 404."
+}
+
+### Create review - Invalid rating (400)
+POST {{baseUrl}}/api/v1/hotels/66666666-6666-6666-6666-666666666666/reviews
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "rating": 6,
+  "content": "Invalid rating - should fail validation."
+}
+
+### Create review - Content too short (400)
+POST {{baseUrl}}/api/v1/hotels/66666666-6666-6666-6666-666666666666/reviews
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "rating": 4,
+  "content": "Too short"
+}

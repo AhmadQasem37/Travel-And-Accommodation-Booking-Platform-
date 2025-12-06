@@ -16,6 +16,16 @@ public sealed class ReviewRepository(ApplicationDbContext context) : IReviewRepo
             .FirstOrDefaultAsync(r => r.Id == id, cancellationToken);
     }
 
+    public async Task<Review?> GetByUserAndHotelAsync(
+        Guid userId,
+        Guid hotelId,
+        CancellationToken cancellationToken = default)
+    {
+        return await context.Reviews
+            .AsNoTracking()
+            .FirstOrDefaultAsync(r => r.UserId == userId && r.HotelId == hotelId, cancellationToken);
+    }
+
     public void Add(Review entity) => context.Reviews.Add(entity);
 
     public void Update(Review entity) => context.Reviews.Update(entity);

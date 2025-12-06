@@ -7,6 +7,7 @@ namespace TAABP.Application.Interfaces.Repositories;
 public interface IReviewRepository
 {
     Task<Review?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<Review?> GetByUserAndHotelAsync(Guid userId, Guid hotelId, CancellationToken cancellationToken = default);
     void Add(Review entity);
     void Update(Review entity);
     void Remove(Review entity);

@@ -10,6 +10,7 @@ using TAABP.Application.Features.Hotels.Queries.GetFeaturedDeals;
 using TAABP.Application.Features.Hotels.Queries.GetHotelById;
 using TAABP.Application.Features.Hotels.Queries.GetRecentlyVisitedHotels;
 using TAABP.Application.Features.Hotels.Queries.SearchHotels;
+using TAABP.Application.Features.Reviews.Commands.CreateReview;
 using TAABP.Application.Features.Reviews.Queries.GetHotelReviews;
 using TAABP.Application.Features.Rooms.Queries.GetAvailableRooms;
 
@@ -176,4 +177,42 @@ public sealed class HotelsController(ISender sender) : ControllerBase
 
         return Ok(result.Value);
     }
+
+    /// <summary>
+    /// Create a review for a hotel (one per hotel per user)
+    /// </summary>
+    /// <param name="hotelId">Hotel ID from route</param>
+    /// <param name="rating">Rating (1-5)</param>
+    /// <param name="content">Review content (10-2000 chars)</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>201 Created on success</returns>
+    [HttpPost("{hotelId:guid}/reviews")]
+    [Authorize(Policy = "User")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> CreateReview(
+        [FromRoute] Guid hotelId,
+        [FromBody] CreateReviewRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        var command = new CreateReviewCommand(hotelId, request.Rating, request.Content);
+        var result = await sender.Send(command, cancellationToken);
+
+        if (result.IsFailure)
+        {
+            return result.Error.Code switch
+            {
+                "Hotel.NotFound" => NotFound(new { error = result.Error.Description }),
+                "Review.AlreadyReviewed" => Conflict(new { error = result.Error.Description }),
+                _ => BadRequest(new { error = result.Error.Description })
+            };
+        }
+
+        return Created();
+    }
 }
+
+public sealed record CreateReviewRequest(int Rating, string Content);
