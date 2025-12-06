@@ -4,11 +4,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TAABP.Application.Common;
 using TAABP.Application.DTOs.Hotels;
+using TAABP.Application.DTOs.Reviews;
 using TAABP.Application.DTOs.Rooms;
 using TAABP.Application.Features.Hotels.Queries.GetFeaturedDeals;
 using TAABP.Application.Features.Hotels.Queries.GetHotelById;
 using TAABP.Application.Features.Hotels.Queries.GetRecentlyVisitedHotels;
 using TAABP.Application.Features.Hotels.Queries.SearchHotels;
+using TAABP.Application.Features.Reviews.Queries.GetHotelReviews;
 using TAABP.Application.Features.Rooms.Queries.GetAvailableRooms;
 
 namespace TAABP.Api.Controllers;
@@ -135,6 +137,36 @@ public sealed class HotelsController(ISender sender) : ControllerBase
         CancellationToken cancellationToken = default)
     {
         var query = new GetAvailableRoomsQuery(hotelId, page, pageSize);
+        var result = await sender.Send(query, cancellationToken);
+
+        if (result.IsFailure)
+        {
+            return NotFound(new { error = result.Error.Description });
+        }
+
+        return Ok(result.Value);
+    }
+
+    /// <summary>
+    /// Get paginated reviews for a hotel
+    /// </summary>
+    /// <param name="hotelId">Hotel ID from route</param>
+    /// <param name="page">Page number (default: 1)</param>
+    /// <param name="pageSize">Reviews per page (default: 10)</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>Paginated list of reviews</returns>
+    [HttpGet("{hotelId:guid}/reviews")]
+    [Authorize(Policy = "User")]
+    [ProducesResponseType(typeof(PagedResult<ReviewDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<ActionResult<PagedResult<ReviewDto>>> GetHotelReviews(
+        [FromRoute] Guid hotelId,
+        [FromQuery] int page = 1,
+        [FromQuery] int pageSize = 10,
+        CancellationToken cancellationToken = default)
+    {
+        var query = new GetHotelReviewsQuery(hotelId, page, pageSize);
         var result = await sender.Send(query, cancellationToken);
 
         if (result.IsFailure)

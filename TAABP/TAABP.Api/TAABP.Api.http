@@ -82,6 +82,22 @@ Authorization: Bearer {{adminToken}}
 GET {{baseUrl}}/api/v1/hotels/00000000-0000-0000-0000-000000000001/rooms
 Authorization: Bearer {{token}}
 
+### Get hotel reviews - default pagination (page 1, pageSize 10)
+GET {{baseUrl}}/api/v1/hotels/66666666-6666-6666-6666-666666666666/reviews
+Authorization: Bearer {{token}}
+
+### Get hotel reviews - with pagination
+GET {{baseUrl}}/api/v1/hotels/66666666-6666-6666-6666-666666666666/reviews?page=1&pageSize=5
+Authorization: Bearer {{token}}
+
+### Get hotel reviews - page 2
+GET {{baseUrl}}/api/v1/hotels/66666666-6666-6666-6666-666666666666/reviews?page=2&pageSize=10
+Authorization: Bearer {{token}}
+
+### Get hotel reviews - Hotel not found (404)
+GET {{baseUrl}}/api/v1/hotels/00000000-0000-0000-0000-000000000001/reviews
+Authorization: Bearer {{token}}
+
 ### Get featured deals - default (top 5 hotels with discounts) - User only
 GET {{baseUrl}}/api/v1/hotels/featured-deals
 Authorization: Bearer {{token}}
